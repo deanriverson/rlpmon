@@ -1,0 +1,23 @@
+<div class="jumbotron">
+  <h1>'Allo, 'Allo!</h1>
+  <p class="lead">
+    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+    Always a pleasure scaffolding your apps.
+  </p>
+  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+</div>
+
+<div class="row form-horizontal">
+  <div class="form-group">
+    <label class="col-xs-1 control-label">You:</label>
+    <div class="col-xs-11">
+      <input type="text" class="col-xs-9 form-control" ng-model="message" ng-keyUp="onKeyUp($event)">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <ul>
+    <li ng-repeat="msg in messages" ng-bind="msg"></li>
+  </ul>
+</div>

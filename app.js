@@ -1,7 +1,12 @@
 var express = require('express');
 
 var reloadComm = require('./reload-comm');
-reloadComm.func();
+reloadComm.init(function(commPort) {
+	console.log('Found Re:load Pro on comm', commPort);
+	reloadComm.startReading(1000, function(v, i) {
+		io && io.emit('vi', v, i);
+	});
+});
  
 var app = express();
 // app.use(express.logger());
@@ -10,7 +15,6 @@ var app = express();
 
 app.configure(function(){
   app.set('views', __dirname + '/app');
-  //app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/app'));
@@ -30,16 +34,19 @@ var server = app.listen(port, function() {
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
-	console.log('user connected');
+	console.log('user connected, sending commPort', reloadComm.getCommPort());
+
+	socket.emit('commPort', reloadComm.getCommPort());
+	socket.emit('setCurrentMillis', reloadComm.getRequestedCurrent());
+
 	socket.on('disconnect', function() {
 	    console.log('user disconnected');
 	});
-	socket.on('chat_message', function(msg){
-	    console.log('message: ' + msg);
-	    io.emit('chat_message', msg);
+
+	socket.on('setCurrentMillis', function(currentMillis){
+	    reloadComm.setCurrentMillis(currentMillis, function(milliAmps, err, results) {
+		    console.log('setCurrentMillis', milliAmps, err, results);
+	    	io.emit('setCurrentMillis', milliAmps);
+	    });
 	});
-    // socket.emit('news', { hello: 'world' });
-    // socket.on('my other event', function (data) {
-    //     console.log(data);
-    // });
 });

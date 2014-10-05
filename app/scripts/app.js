@@ -3,7 +3,6 @@
 angular.module('reloadApp', ['ngRoute'])
 
 .config(function($routeProvider) {
-	console.log('CONFIGURING ROUTES');
 	$routeProvider
 		.when('/index', {
 			controller: 'MonitorCtrl',

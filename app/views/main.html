@@ -1,23 +1,48 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<div class="row" ng-show="commPort">
+  <p class="lead text-center">Connected to Re:Load Pro on port <span ng-bind="commPort"></span></p>
 </div>
 
 <div class="row form-horizontal">
   <div class="form-group">
-    <label class="col-xs-1 control-label">You:</label>
-    <div class="col-xs-11">
-      <input type="text" class="col-xs-9 form-control" ng-model="message" ng-keyUp="onKeyUp($event)">
+    <label class="col-xs-12 col-sm-4 control-label">Set Current (Amps)</label>
+    <div class="col-xs-12 col-sm-8">
+      <input type="text" class="col-xs-9 form-control" ng-model="currentInput" ng-keyUp="onKeyUp($event)" autofocus>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <ul>
-    <li ng-repeat="msg in messages" ng-bind="msg"></li>
-  </ul>
 </div>
+  
+<div class="row">
+  <div class='rlp-val'>
+    <span class="rlp-label">Requested Current</span>
+    <span ng-bind="requestedCurrent | number : 2"></span>
+    <span class="rlp-units pull-right">Amps</span>
+  </div>
+
+  <div class='rlp-val'>
+    <span class="rlp-label">Actual Current</span>
+    <span ng-bind="lastI | number : 2"></span>
+    <span class="rlp-units pull-right">Amps</span>
+  </div>
+
+  <div class='rlp-val'>
+    <span class="rlp-label">Voltage</span>
+    <span ng-bind="lastV | number : 2"></span>
+    <span class="rlp-units pull-right">Volts</span>
+  </div>
+
+  <div class='rlp-val'>
+    <span class="rlp-label">Power</span>
+    <span ng-bind="lastP | number : 2"></span>
+    <span class="rlp-units pull-right">Watts</span>
+  </div>
+
+  <div class='rlp-val'>
+    <span class="rlp-label">Resistance</span>
+    <span ng-bind="lastR | number : 2"></span>
+    <span class="rlp-units pull-right">Ohms</span>
+  </div>
+</div>
+

@@ -12,7 +12,6 @@ var app = express();
 // app.use(express.logger());
 
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/app');
   app.use(express.bodyParser());

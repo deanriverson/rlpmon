@@ -2,29 +2,51 @@
 
 angular.module('reloadApp')
 
-.controller('MonitorCtrl', function($scope) {
-	function updateValues(v, i) {
-		$scope.lastV = v;
-		$scope.lastI = i;
-		$scope.lastP = v*i;
-		$scope.lastR = isNaN(v/i) ? 0 : v/i;
+.controller('MonitorCtrl', function($scope, $interval, $timeout, chartService) {
+	var MAX_TEMP = 150,
+		powerID = chartService.createChart('power', 'power'),
+		voltageID = chartService.createChart('voltage', 'voltage'),
+		resistanceID = chartService.createChart('resistance', 'resistance'),
+		actCurrentID = chartService.createChart('actual-current', 'current'),
+		reqCurrentID = chartService.createChart('requested-current', 'current');
 
-		$scope.voltages   .push($scope.lastV);
-		$scope.currents   .push($scope.lastI);
-		$scope.powers     .push($scope.lastP);
-		$scope.resistances.push($scope.lastR);
+	function updateValues(v, i) {
+		$scope.requestedCurrent = chartService.tick(reqCurrentID, $scope.requestedCurrent);
+		$scope.lastI = chartService.tick(actCurrentID, i);
+		$scope.lastV = chartService.tick(voltageID, v);
+		$scope.lastP = chartService.tick(powerID, v*i);
+		$scope.lastR = chartService.tick(resistanceID, isNaN(v/i) ? 0 : v/i);
 	}
 
 	var socket = io();
 
-	$scope.currentInput = "";
+	$scope.currentInput = 0;
 	$scope.requestedCurrent = 0;
 	$scope.lastV = $scope.lastI = $scope.lastP = $scope.lastR = 0;
 
-	$scope.voltages = [];
-	$scope.currents = [];
-	$scope.powers = [];
-	$scope.resistances = [];
+	$scope.inputDisabled = true;
+	$scope.commPort = "No Connection"
+	$scope.connectionClass = "not-connected";
+
+	$scope.temp = 25;
+	$scope.degreeUnit = 'C';
+
+    $scope.maxValue = MAX_TEMP;
+ 	$scope.animationTime = 30;
+	$scope.gaugeOptions = {
+        lines: 10,
+        angle: 0,
+        lineWidth: 0.44,
+        pointer: {
+            length: 0.7,
+            strokeWidth: 0.035,
+            color: '#a0a0a0'
+        },
+        limitMax: 'true',
+		percentColors: [[0.0, "#00a000" ], [0.6, "#00a000" ], [0.75, "#ffff00"], [0.95, "#ff0000"]],
+        strokeColor: '#E0E0E0',
+        generateGradient: true
+    };
 
 	$scope.onKeyUp = function(ev) {
 		var value;
@@ -39,19 +61,23 @@ angular.module('reloadApp')
 	socket.on('setCurrentMillis', function(currentMillis) {
 		$scope.$apply(function() {
 			$scope.requestedCurrent = currentMillis / 1000;
-			$scope.currentInput = '' + currentMillis / 1000;
+			$scope.currentInput = currentMillis / 1000;
 		});
 	});
 
 	socket.on('commPort', function(portName) {
+		if (!portName) return;
 		$scope.$apply(function() {
+			$scope.inputDisabled = false;
+			$scope.connectionClass = "connected";
 			$scope.commPort = portName;
 		});
 	});
 
-	socket.on('vi', function(i, v) {
+	socket.on('vit', function(v, i, t) {
 		$scope.$apply(function() { 
-			updateValues(v / 1000, i / 1000) 
+			$scope.temp = t > MAX_TEMP ? MAX_TEMP : t;
+			updateValues(v / 1000, i / 1000);
 		});
 	});
 });

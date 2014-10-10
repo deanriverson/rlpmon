@@ -43,8 +43,12 @@ module.exports = (function() {
 				return port.manufacturer === 'Arachnid Labs Ltd';
 			});
 
-			console.log('Re:load Pro is on port', rlpPort[0].comName);
-			cb(rlpPort[0].comName, opts);
+			if (rlpPort.length > 0) {
+				console.log('Re:load Pro is on port', rlpPort[0].comName);
+				cb(rlpPort[0].comName, opts);
+			} else {
+				console.log('No Re:load Pro was found');
+			}
 		});
 	}
 

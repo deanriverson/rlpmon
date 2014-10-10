@@ -3,8 +3,8 @@ var express = require('express');
 var reloadComm = require('./reload-comm');
 reloadComm.init(function(commPort) {
 	console.log('Found Re:load Pro on comm', commPort);
-	reloadComm.startReading(1000, function(v, i) {
-		io && io.emit('vi', v, i);
+	reloadComm.startReading(1000, function(i, v) {
+		io && io.emit('vit', v, i, 40);
 	});
 });
  

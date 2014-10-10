@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('reloadApp', ['ngRoute'])
+angular.module('reloadApp', ['ngRoute', 'gaugejs'])
 
 .config(function($routeProvider) {
 	$routeProvider

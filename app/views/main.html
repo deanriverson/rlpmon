@@ -1,48 +1,82 @@
-<div class="row" ng-show="commPort">
-  <p class="lead text-center">Connected to Re:Load Pro on port <span ng-bind="commPort"></span></p>
-</div>
+<div class="row">
+  <div class="rlp-header">
+    <div class="col-xs-3">
+      <div>Connection</div>
+      <div class="connection-light {{connectionClass}}" title="{{commPort}}"></div>
+    </div>
 
-<div class="row form-horizontal">
-  <div class="form-group">
-    <label class="col-xs-12 col-sm-4 control-label">Set Current (Amps)</label>
-    <div class="col-xs-12 col-sm-8">
-      <input type="text" class="col-xs-9 form-control" ng-model="currentInput" ng-keyUp="onKeyUp($event)" autofocus>
+    <div class="form-group col-xs-5">
+        <label class="col-xs-12 control-label">Amps</label>
+        <div class="col-xs-12">
+          <input type="number" class="col-xs-9 form-control" autofocus
+                 ng-model="currentInput" ng-keyUp="onKeyUp($event)" ng-disabled="inputDisabled">
+      </div>
+    </div>
+
+    <div class="col-xs-4">
+      <div class="pull-right temp-container">
+        <div id="temp-label">Temp</div>
+        <div id="temp-value"><span ng-bind="temp | number:0"></span>&deg; <span ng-bind="degreeUnit"></span></div>
+        <canvas width="100" height="60" 
+                gaugejs options="gaugeOptions" value="temp" max-value="maxValue" animation-time="animationTime">
+        </canvas>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="row">
-</div>
-  
-<div class="row">
-  <div class='rlp-val'>
+  <div class="rlp-display current">
     <span class="rlp-label">Requested Current</span>
-    <span ng-bind="requestedCurrent | number : 2"></span>
-    <span class="rlp-units pull-right">Amps</span>
+    <div class="rlp-value">
+      <span ng-bind="requestedCurrent | number : 2"></span>
+      <span class="rlp-units">Amps</span>
+    </div>
+    <div id="requested-current" class="rlp-chart"></div>
   </div>
+</div>
 
-  <div class='rlp-val'>
+<div class="row">
+  <div class="rlp-display current">
     <span class="rlp-label">Actual Current</span>
-    <span ng-bind="lastI | number : 2"></span>
-    <span class="rlp-units pull-right">Amps</span>
+    <div class="rlp-value">
+      <span ng-bind="lastI | number : 2"></span>
+      <span class="rlp-units">Amps</span>
+    </div>
+    <div id="actual-current" class="rlp-chart"></div>
   </div>
+</div>
 
-  <div class='rlp-val'>
+<div class="row">
+  <div class="rlp-display voltage">
     <span class="rlp-label">Voltage</span>
-    <span ng-bind="lastV | number : 2"></span>
-    <span class="rlp-units pull-right">Volts</span>
+    <div class="rlp-value">
+      <span ng-bind="lastV | number : 2"></span>
+      <span class="rlp-units">Volts</span>
+    </div>
+    <div id="voltage" class="rlp-chart"></div>
   </div>
+</div>
 
-  <div class='rlp-val'>
+<div class="row">
+  <div class="rlp-display power">
     <span class="rlp-label">Power</span>
-    <span ng-bind="lastP | number : 2"></span>
-    <span class="rlp-units pull-right">Watts</span>
+    <div class="rlp-value">
+      <span ng-bind="lastP | number : 2"></span>
+      <span class="rlp-units">Watts</span>
+    </div>
+    <div id="power" class="rlp-chart"></div>
   </div>
+</div>
 
-  <div class='rlp-val'>
+<div class="row">
+  <div class="rlp-display resistance">
     <span class="rlp-label">Resistance</span>
-    <span ng-bind="lastR | number : 2"></span>
-    <span class="rlp-units pull-right">Ohms</span>
+    <div class="rlp-value">
+      <span ng-bind="lastR | number : 2"></span>
+      <span class="rlp-units">Ohms</span>
+    </div>
+    <div id="resistance" class="rlp-chart"></div>
   </div>
 </div>
 

@@ -12,7 +12,8 @@
     "angular-cookies": "~1.0.7",
     "angular-sanitize": "~1.0.7",
     "angular-route": "~1.2.26",
-    "d3": "~3.4.11"
+    "d3": "~3.4.11",
+    "angular-gaugejs": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

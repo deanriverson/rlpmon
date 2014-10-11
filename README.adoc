@@ -18,7 +18,7 @@ tested it personally.
 === Usage
 
 To use RLPmon, simply plug the {rlp} USB cable into your computer, start the application
-(refer to the <<Quick Start>> section below for instructions), and open a web browser to
+(refer to the <<quick-start,Quick Start>> section below for instructions), and open a web browser to
 `http://localhost:5000`.
 
 You will see the interface pictured above appear in your browser window.  The _Connection_
@@ -32,7 +32,7 @@ NOTE: The temperature gauge is not functional at this time since the {rlp} firmw
 not yet report its internal temperature. It is simply there as a placeholder pending an
 firmware update.
 
-[Quick Start]
+[quick-start]
 === Quick Start (if you have Node and npm installed)
 
 After cloning the RLPmon repository, you will need to install the Node.js modules on which
@@ -54,7 +54,7 @@ run the application by typing:
 This application runs on Node.js, which gives us a way to run javascript applications
 outside of the browser.  Visit the Node.js http://nodejs.org/download/[download page] to
 download the installer for your OS.  After installing Node, return to the instructions
-in the <<Quick Start>> section.
+in the <<quick-start,Quick Start>> section.
 
 NOTE: Be sure to download the current version of Node (v0.10.32 at this time). There is
 an incompatibility in the node-serialport package that prevents it from working with the

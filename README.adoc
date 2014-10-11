@@ -1,0 +1,84 @@
+= RLPmon
+:imagesdir: doc/images
+:rlp: Re:load Pro
+:nsp: https://github.com/voodootikigod/node-serialport
+
+This app can be used as a remote monitoring and control program for your ArachnidLabs
+{rlp}.  RLPmon (shown below) allows you to control the current setting of the {rlp} and
+displays approximately 3 hours of data showing the current you requested, the actual
+current that the {rlp} is drawing, the voltage being supplied by your source, the power
+dissipated, and the internal resistance of the {rlp}.
+
+image::screen-shot.png[Screen shot, 654, 800]
+
+NOTE: This software is a personal project and has not been tested on any OS other than
+Mac OS X.  I have no reason to believe it won't work on Windows and Linux, but I have not
+tested it personally.
+
+=== Usage
+
+To use RLPmon, simply plug the {rlp} USB cable into your computer, start the application
+(refer to the <<Quick Start>> section below for instructions), and open a web browser to
+`http://localhost:5000`.
+
+You will see the interface pictured above appear in your browser window.  The _Connection_
+light will be green if the application properly detects your {rlp}.  If the light stays
+red, check the USB connection to your {rlp}.
+
+Once the application starts and you have a connection, you can set the requested current
+by typing a value in at the top of the window.
+
+NOTE: The temperature gauge is not functional at this time since the {rlp} firmware does
+not yet report its internal temperature. It is simply there as a placeholder pending an
+firmware update.
+
+[Quick Start]
+=== Quick Start (if you have Node and npm installed)
+
+After cloning the RLPmon repository, you will need to install the Node.js modules on which
+the application depends. Change into the directory containing the RLPmon software and run
+the following command.
+
+ $> npm install
+
+Be patient, it make take a while for the Node Package Manager to download and install the
+project's dependencies.  If you have any problems installing {nsp}[node-serialport], please
+see that project's {nsp}#to-install[GitHub page] for installation instructions and
+troubleshooting tips. When npm has finished, plug in your {rlp} if you haven't already and
+run the application by typing:
+
+ $> node app.js
+
+=== Not so Quick Start (if you've never heard of Node and npm)
+
+This application runs on Node.js, which gives us a way to run javascript applications
+outside of the browser.  Visit the Node.js http://nodejs.org/download/[download page] to
+download the installer for your OS.  After installing Node, return to the instructions
+in the <<Quick Start>> section.
+
+NOTE: Be sure to download the current version of Node (v0.10.32 at this time). There is
+an incompatibility in the node-serialport package that prevents it from working with the
+more recent development versions of Node.
+
+=== Technology and Future Directions
+
+RLPmon is a very simple web server that uses {nsp}[node-serialport] to communicate with
+the {rlp} over its USB serial port. It uses http://socket.io/[web sockets] to relay the
+data and commands back and forth between the server and any clients that are connected.
+This means that any desktop computer, tablet, or phone on your network that is equipped
+with a modern web browser can remotely monitor and control the {rlp}. These devices don't
+need to install any additional software, just open the browser and type http://localhost:5000
+in the URL bar.
+
+The line charts are rendered with http://d3js.org/[D3], a javascript visualization library.
+Due to the string processing required when rendering a real-time chart with D3 and SVG,
+it would be beneficial to replace this component with a direct rendering solution based on
+the HTML5 canvas in the future.
+
+Speaking of future directions, here are a few features I would like to add at some point:
+
+* Safety interlocks so you can define a maximum power to be dissapated and tell RLPmon
+to either adjust current to stay under that level or shut down the {rlp} and raise an alarm
+when the level is exceded.
++
+* Define a current profile so RLPmon can follow a pre-programmed sequence of current settings.

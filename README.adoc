@@ -29,7 +29,7 @@ Once the application starts and you have a connection, you can set the requested
 by typing a value in at the top of the window.
 
 NOTE: The temperature gauge is not functional at this time since the {rlp} firmware does
-not yet report its internal temperature. It is simply there as a placeholder pending an
+not yet report its internal temperature. It is simply there as a placeholder pending a
 firmware update.
 
 [quick-start]

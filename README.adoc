@@ -32,8 +32,8 @@ NOTE: The temperature gauge is not functional at this time since the {rlp} firmw
 not yet report its internal temperature. It is simply there as a placeholder pending a
 firmware update.
 
-[[quick-start]]
-=== Quick Start (if you have Node and npm installed)
+
+=== [[quick-start]]Quick Start (if you have Node and npm installed)
 
 After cloning the RLPmon repository, you will need to install the Node.js modules on which
 the application depends. Change into the directory containing the RLPmon software and run

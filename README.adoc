@@ -70,6 +70,8 @@ with a modern web browser can remotely monitor and control the {rlp}. These devi
 need to install any additional software, just open the browser and type http://localhost:5000
 in the URL bar.
 
+image::mobile.jpg[]
+
 The line charts are rendered with http://d3js.org/[D3], a javascript visualization library.
 Due to the string processing required when rendering a real-time chart with D3 and SVG,
 it would be beneficial to replace this component with a direct rendering solution based on

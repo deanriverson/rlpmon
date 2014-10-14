@@ -79,8 +79,12 @@ the HTML5 canvas in the future.
 
 Speaking of future directions, here are a few features I would like to add at some point:
 
+* Make temperature display functional once temperature is reported by {rlp}
++
 * Safety interlocks so you can define a maximum power to be dissapated and tell RLPmon
 to either adjust current to stay under that level or shut down the {rlp} and raise an alarm
 when the level is exceded.
 +
 * Define a current profile so RLPmon can follow a pre-programmed sequence of current settings.
++
+* Automated battery life/capacity testing?
